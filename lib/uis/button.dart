@@ -8,12 +8,12 @@ class CustomButton extends StatelessWidget {
       this.loading = false,
       required this.text,
         this.onPressed,
-      this.color = ThemedColorDark})
+      this.color = ThemedColorDark, this.onDisabledPressed})
       : super(key: key);
   final String text;
   final bool loading;
   final Color color;
-  final Function()? onPressed;
+  final Function()? onPressed, onDisabledPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class CustomButton extends StatelessWidget {
           minimumSize: const Size(128, 46),
             backgroundColor: color,
             disabledBackgroundColor: color.withOpacity(0.25)),
-        onPressed: loading ? null : onPressed,
+        onPressed: loading ? null : (onPressed ?? onDisabledPressed),
         child: loading
             ? Transform.scale(
                 scale: 0.5,

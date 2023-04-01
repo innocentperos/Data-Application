@@ -70,21 +70,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16).copyWith(top: 0),
-                child: const TextInputField(
+                child:  TextInputField(
                   hint: "Phone Number *",
                 ),
               ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16).copyWith(top: 0),
-                child: const TextInputField(
+                child:  TextInputField(
                   hint: "Password",
                 ),
               ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16).copyWith(top: 0),
-                child: const TextInputField(
+                child:  TextInputField(
                   hint: "Confirm Password *",
                 ),
               ),

@@ -70,6 +70,7 @@ class _ConfirmPurchaseSheetState extends State<ConfirmPurchaseSheet> {
 
   List<Widget> buildDescription() {
     List<Widget> items = widget.transaction.fields
+        .where((element) => !element.hidden)
         .map((e) => confirmPanelItem(e.key, e.value))
         .toList();
 

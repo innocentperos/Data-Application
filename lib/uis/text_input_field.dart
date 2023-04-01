@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:untitled1/screens/theme_utils.dart';
 
 class TextInputField extends StatefulWidget {
-  const TextInputField({Key? key, this.onChanged, this.hint, this.prependIcon, this.appendIcon , this.inputType, this.color = ThemedColor}) : super(key: key);
+  const TextInputField({Key? key, this.onChanged, this.controller, this.hint, this.prependIcon, this.appendIcon , this.inputType, this.color = ThemedColor}) : super(key: key);
 
   final String? hint;
   final TextInputType? inputType;
   final IconData? prependIcon;
   final IconData? appendIcon;
   final Color color;
+  final TextEditingController? controller;
   final Function(String)? onChanged ;
 
   @override
@@ -16,6 +18,14 @@ class TextInputField extends StatefulWidget {
 }
 
 class _TextInputFieldState extends State<TextInputField> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,6 +40,7 @@ class _TextInputFieldState extends State<TextInputField> {
           ),
           padding: const EdgeInsets.all(8),
           child: TextField(
+            controller: widget.controller ,
             keyboardType: widget.inputType,
             onChanged: widget.onChanged,
             decoration: InputDecoration(

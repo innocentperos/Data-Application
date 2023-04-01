@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/change_notifiers/home_change_notifier.dart';
+import 'package:untitled1/screens/airtime_purchase_screen.dart';
 import 'package:untitled1/screens/data_purchase_screen.dart';
 import 'package:untitled1/screens/fund.dart';
 import 'package:untitled1/screens/theme_utils.dart';
@@ -246,7 +247,14 @@ class _HomeState extends State<Home> {
                                         return ServiceProviderSelector(
                                           items:
                                               NigerianNetworkServiceProviders,
-                                          onPressed: (provider) {},
+                                          onPressed: (provider) {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AirtimePurchaseScreen(
+                                                            provider:
+                                                                provider)));
+                                          },
                                         );
                                       });
                                 },

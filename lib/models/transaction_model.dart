@@ -21,7 +21,10 @@ class TransactionModel {
 class TransactionDescriptionField{
   final String key, value;
 
-  TransactionDescriptionField(this.key, this.value);
+  final String? keyId, valueId;
+  final bool hidden;
+
+  TransactionDescriptionField(this.key, this.value, {this.keyId, this.valueId, this.hidden = false});
 }
 
 class TransactionDisclaimer {
