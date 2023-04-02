@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:untitled1/change_notifiers/home_change_notifier.dart';
 import 'package:untitled1/screens/airtime_purchase_screen.dart';
+import 'package:untitled1/screens/cable_tv_payment_screen.dart';
 import 'package:untitled1/screens/data_purchase_screen.dart';
 import 'package:untitled1/screens/fund.dart';
 import 'package:untitled1/screens/theme_utils.dart';
@@ -9,6 +10,7 @@ import 'package:untitled1/uis/link.dart';
 import 'package:untitled1/uis/service_provider_picker.dart';
 
 import '../../models/data_models.dart';
+import '../../uis/cable_table_provider_picker.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -277,14 +279,35 @@ class _HomeState extends State<Home> {
                       const SizedBox(
                         height: 16,
                       ),
-                      const AspectRatio(
+                      AspectRatio(
                         aspectRatio: 4,
                         child: TileButton(
-                            color: Colors.purple,
-                            text: "Cable Television",
-                            description:
-                                "Pay for your DSTV, StarTimes, and GoTV subscriptions",
-                            icon: Icons.tv_rounded),
+                          color: Colors.purple,
+                          text: "Cable Television",
+                          description:
+                              "Pay for your DSTV, StarTimes, and GoTV subscriptions",
+                          icon: Icons.tv_rounded,
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (context) {
+                                  return CableTVProviderSelector(
+                                    items: NigerianCableTVProviders,
+                                    onPressed: (provider) async {
+                                      await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  CableTvPaymentScreen(
+                                                    provider: provider,
+                                                  )));
+
+                                      Navigator.of(context).pop();
+                                    },
+                                  );
+                                });
+                          },
+                        ),
                       )
                     ],
                   ),
