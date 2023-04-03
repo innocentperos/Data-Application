@@ -6,6 +6,7 @@ import 'package:untitled1/screens/cable_tv_payment_screen.dart';
 import 'package:untitled1/screens/data_purchase_screen.dart';
 import 'package:untitled1/screens/fund.dart';
 import 'package:untitled1/screens/theme_utils.dart';
+import 'package:untitled1/screens/transaction_history_screen.dart';
 import 'package:untitled1/uis/link.dart';
 import 'package:untitled1/uis/service_provider_picker.dart';
 
@@ -74,7 +75,7 @@ class _HomeState extends State<Home> {
                           decoration: const BoxDecoration(
                               color: Colors.black38,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(16))),
+                              BorderRadius.all(Radius.circular(16))),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -86,6 +87,10 @@ class _HomeState extends State<Home> {
                                     icon: Icons.history,
                                     onPressed: () {
                                       //  TODO: View transaction history
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const TransactionHistoryScreen()));
                                     },
                                   ),
                                 ],
@@ -94,31 +99,32 @@ class _HomeState extends State<Home> {
                                 children: [
                                   Consumer<HomeChangeNotifier>(
                                       builder: (context, model, child) {
-                                    return InkWell(
-                                      onTap: () {
-                                        //  TODO : Show or hide account balance
-                                        model.showAccount = !model.showAccount;
-                                      },
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(8)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(6.0),
-                                        child: Stack(
-                                          children: [
-                                            const Icon(
-                                              Icons.remove_red_eye_outlined,
-                                              color: ThemedColor,
+                                        return InkWell(
+                                          onTap: () {
+                                            //  TODO : Show or hide account balance
+                                            model.showAccount =
+                                            !model.showAccount;
+                                          },
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(6.0),
+                                            child: Stack(
+                                              children: [
+                                                const Icon(
+                                                  Icons.remove_red_eye_outlined,
+                                                  color: ThemedColor,
+                                                ),
+                                                if (!model.showAccount)
+                                                  const Icon(
+                                                    Icons.clear,
+                                                    color: ThemedColor,
+                                                  ),
+                                              ],
                                             ),
-                                            if (!model.showAccount)
-                                              const Icon(
-                                                Icons.clear,
-                                                color: ThemedColor,
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  }),
+                                          ),
+                                        );
+                                      }),
                                   const SizedBox(
                                     width: 8,
                                   ),
@@ -130,39 +136,39 @@ class _HomeState extends State<Home> {
                               ),
                               Consumer<HomeChangeNotifier>(
                                   builder: (context, model, child) {
-                                return Stack(
-                                  children: [
-                                    if (!model.loadingBalance)
-                                      Row(
-                                        mainAxisAlignment:
+                                    return Stack(
+                                      children: [
+                                        if (!model.loadingBalance)
+                                          Row(
+                                            mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            getBalanceDisplayText(model),
-                                            style: WhiteText.copyWith(
-                                                fontSize:
+                                            children: [
+                                              Text(
+                                                getBalanceDisplayText(model),
+                                                style: WhiteText.copyWith(
+                                                    fontSize:
                                                     getBalanceFontSize(model),
-                                                fontWeight: FontWeight.bold,
-                                                letterSpacing: 1.2),
-                                          ),
-                                          IconButton(
-                                              onPressed:
+                                                    fontWeight: FontWeight.bold,
+                                                    letterSpacing: 1.2),
+                                              ),
+                                              IconButton(
+                                                  onPressed:
                                                   determineRefreshButtonAction(
                                                       model),
-                                              icon: const Icon(
-                                                Icons.refresh,
-                                                color: ThemedColor,
-                                              ))
-                                        ],
-                                      ),
-                                    if (model.loadingBalance)
-                                      const CircularProgressIndicator(
-                                        valueColor:
+                                                  icon: const Icon(
+                                                    Icons.refresh,
+                                                    color: ThemedColor,
+                                                  ))
+                                            ],
+                                          ),
+                                        if (model.loadingBalance)
+                                          const CircularProgressIndicator(
+                                            valueColor:
                                             AlwaysStoppedAnimation(ThemedColor),
-                                      )
-                                  ],
-                                );
-                              }),
+                                          )
+                                      ],
+                                    );
+                                  }),
                               const SizedBox(
                                 height: 16,
                               ),
@@ -170,17 +176,17 @@ class _HomeState extends State<Home> {
                                 children: [
                                   Expanded(
                                       child: TileButton(
-                                    text: "Fund Wallet",
-                                    description:
+                                        text: "Fund Wallet",
+                                        description:
                                         "Add money to your data account",
-                                    icon: Icons.add_rounded,
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
+                                        icon: Icons.add_rounded,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
                                                   const FundPage()));
-                                    },
-                                  )),
+                                        },
+                                      )),
                                 ],
                               )
                             ],
@@ -199,7 +205,7 @@ class _HomeState extends State<Home> {
                               child: SquaredTileButton(
                                 text: "Purchase Data",
                                 description:
-                                    "Buy a data plan for any of the supported networks",
+                                "Buy a data plan for any of the supported networks",
                                 icon: Icons.network_cell_rounded,
                                 onPressed: () {
                                   //      TODO : Goto data purchase screen
@@ -209,14 +215,14 @@ class _HomeState extends State<Home> {
                                       builder: (context) {
                                         return ServiceProviderSelector(
                                           items:
-                                              NigerianNetworkServiceProviders,
+                                          NigerianNetworkServiceProviders,
                                           onPressed: (provider) async {
                                             await Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         DataPurchaseScreen(
                                                           networkProvider:
-                                                              provider,
+                                                          provider,
                                                         )));
 
                                             Navigator.of(context).pop();
@@ -237,7 +243,7 @@ class _HomeState extends State<Home> {
                                 color: Colors.teal,
                                 text: "Purchase Airtime",
                                 description:
-                                    "Send airtel of the supported supported networks",
+                                "Send airtel of the supported supported networks",
                                 icon: Icons.phone,
                                 onPressed: () {
                                   //      TODO : Goto airtime purchase
@@ -248,14 +254,14 @@ class _HomeState extends State<Home> {
                                       builder: (context) {
                                         return ServiceProviderSelector(
                                           items:
-                                              NigerianNetworkServiceProviders,
+                                          NigerianNetworkServiceProviders,
                                           onPressed: (provider) {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         AirtimePurchaseScreen(
                                                             provider:
-                                                                provider)));
+                                                            provider)));
                                           },
                                         );
                                       });
@@ -285,7 +291,7 @@ class _HomeState extends State<Home> {
                           color: Colors.purple,
                           text: "Cable Television",
                           description:
-                              "Pay for your DSTV, StarTimes, and GoTV subscriptions",
+                          "Pay for your DSTV, StarTimes, and GoTV subscriptions",
                           icon: Icons.tv_rounded,
                           onPressed: () {
                             showModalBottomSheet(
@@ -374,13 +380,12 @@ class _HomeState extends State<Home> {
 }
 
 class TileButton extends StatelessWidget {
-  const TileButton(
-      {Key? key,
-      required this.text,
-      required this.icon,
-      this.onPressed,
-      this.color,
-      required this.description})
+  const TileButton({Key? key,
+    required this.text,
+    required this.icon,
+    this.onPressed,
+    this.color,
+    required this.description})
       : super(key: key);
   final IconData icon;
   final String text, description;
@@ -444,13 +449,12 @@ class TileButton extends StatelessWidget {
 }
 
 class SquaredTileButton extends StatelessWidget {
-  const SquaredTileButton(
-      {Key? key,
-      required this.text,
-      required this.icon,
-      this.onPressed,
-      this.color,
-      required this.description})
+  const SquaredTileButton({Key? key,
+    required this.text,
+    required this.icon,
+    this.onPressed,
+    this.color,
+    required this.description})
       : super(key: key);
   final IconData icon;
   final String text, description;

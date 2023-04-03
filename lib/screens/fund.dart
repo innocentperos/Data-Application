@@ -111,7 +111,7 @@ class _FundPageState extends State<FundPage> {
               text: "Fund with ATM Card",
               color: ThemedColorDark,
               onPressed: () {
-                //  TODO : Open paystack payment gateway
+                //  TODO : Open pay stack payment gateway
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const FundWithCardScreen()));
               },
