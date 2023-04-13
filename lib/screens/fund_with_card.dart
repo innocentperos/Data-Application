@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled1/screens/fund.dart';
 import 'package:untitled1/screens/theme_utils.dart';
 import 'package:untitled1/uis/text_input_field.dart';
 
@@ -44,7 +45,9 @@ class _FundWithCardScreenState extends State<FundWithCardScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        panelDescription(label: "Amount", value: "N ${formatAmount(amount)}"),
+                        panelDescription(
+                            label: "Amount",
+                            value: "N ${formatAmount(amount)}"),
                         panelDescription(
                             label: "Charges at $_gateWayPercent%",
                             value:
@@ -97,38 +100,48 @@ class _FundWithCardScreenState extends State<FundWithCardScreen> {
                   )),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: CustomButton(
-                      color: ThemedColorDark,
-                      onPressed: () {
-                        //  TODO : Open paystack payment gateway
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              "Continue with Payment".toUpperCase(),
-                              style: WhiteText.copyWith(
-                                  letterSpacing: 1.5,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "N${formatAmount(getTotalPaymentAmount())}".toUpperCase(),
-                              style: WhiteText.copyWith(
-                                  letterSpacing: 1.5,
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    child: determineMainActionWidget(context),
                   ),
                 ],
               )),
     );
+  }
+
+  Widget determineMainActionWidget(BuildContext context) {
+    return amount < 50
+        ? Text(
+            "Enter an amount of N 50 or above ",
+            style: WhiteText.copyWith(fontSize: 18),
+          )
+        : CustomButton(
+            color: ThemedColorDark,
+            onPressed: () {
+              //  TODO : Open flutterwave payment gateway
+              proceedPaymentInitialization(context);
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Continue with Payment".toUpperCase(),
+                    style: WhiteText.copyWith(
+                        letterSpacing: 1.5,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "N${formatAmount(getTotalPaymentAmount())}".toUpperCase(),
+                    style: WhiteText.copyWith(
+                        letterSpacing: 1.5,
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600),
+                  )
+                ],
+              ),
+            ),
+          );
   }
 
   double getTotalPaymentAmount() => ((amount / 100) * _gateWayPercent + amount);
@@ -156,5 +169,16 @@ class _FundWithCardScreenState extends State<FundWithCardScreen> {
         ),
       ],
     );
+  }
+
+  void proceedPaymentInitialization(BuildContext context) async {
+    showModalBottomSheet(
+        context: context,
+        barrierColor: Colors.black87,
+        backgroundColor: Colors.transparent,
+        builder: (context) => Container(decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32),
+          color: ThemedDarkBg
+        ),child: FundPage(amount: amount)));
   }
 }

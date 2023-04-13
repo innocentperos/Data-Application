@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:untitled1/auth/auth_services.dart';
 import 'package:untitled1/screens/auth/register.dart';
 import 'package:untitled1/screens/theme_utils.dart';
 import 'package:untitled1/uis/button.dart';
 import 'package:untitled1/uis/link.dart';
 import 'package:untitled1/uis/text_input_field.dart';
+import 'package:untitled1/utils.dart';
 
 import '../home/home.dart';
 
@@ -17,6 +21,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 160,
               ),
               Text(
-                "Welcome  😊",
+                "Welcome",
                 style: WhiteText.copyWith(
                     fontSize: 24, fontWeight: FontWeight.w300),
               ),
@@ -44,16 +51,17 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 16),
-                child: const TextInputField(
+                child: TextInputField(
                   hint: "Email Address",
-                  prependIcon: Icons.email_outlined,
+                  controller: emailController,
                 ),
               ),
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 16).copyWith(top: 0),
-                child: const TextInputField(
+                child: TextInputField(
                   hint: "Password",
+                  controller: passwordController,
                 ),
               ),
               Row(
@@ -79,8 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: "Login",
                 loading: false,
                 onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Home()));
+                  loginUser(context);
                 },
               ),
               const SizedBox(
@@ -108,5 +115,50 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       )),
     );
+  }
+
+  void loginUser(BuildContext context) async {
+    if (emailController.value.text.isEmpty) {
+      showSnackBar(context, "Please provide your registered email address");
+      return;
+    }
+    if (passwordController.value.text.isEmpty) {
+      showSnackBar(context, "Please provide your account password");
+      return;
+    }
+
+    try {
+      UserCredential? userCredential = await AuthService.signIn(
+          emailController.value.text, passwordController.value.text);
+
+      if (userCredential != null && userCredential?.user != null) {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const Home()));
+      }
+
+    } on FirebaseAuthException catch (err) {
+      if (kDebugMode) {
+        print("failed to sign in user -------------------------");
+        print(err);
+      }
+
+      //  Logging in failed check the conditions and handle
+
+      switch (err.code) {
+        case "invalid-email":
+          showSnackBar(context, "Provide a valid email address");
+          break;
+        case "user-not-found":
+          showSnackBar(
+              context, "No account found with the provided email address");
+          break;
+        case "wrong-password":
+          showSnackBar(context, "Wrong password provided");
+          break;
+        default:
+          showSnackBar(context, "Something went wrong, try again later");
+          break;
+      }
+    }
   }
 }

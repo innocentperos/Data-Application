@@ -1,5 +1,7 @@
 
 
+import 'package:flutter/material.dart';
+
 String? formatAmount(double value){
   List<String> splitted = value.toString().split(".");
   String formatted = "";
@@ -15,4 +17,11 @@ String? formatAmount(double value){
     }
   }
   return "$formatted.${splitted[1]}";
+}
+
+
+void showSnackBar(BuildContext context, String text){
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text(text))
+  );
 }

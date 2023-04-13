@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:untitled1/screens/auth/login.dart';
 import 'package:untitled1/screens/theme_utils.dart';
+import 'package:untitled1/uis/button.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({Key? key, required this.loadingPreviousAccount}) : super(key: key);
+
+  final bool loadingPreviousAccount;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -73,18 +76,18 @@ class _SplashScreenState extends State<SplashScreen> {
                 itemCount: 3,
               ),
             ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              child: FilledButton(
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CustomButton(
+                text: "Get Start",
+                loading: widget.loadingPreviousAccount,
                 onPressed: () {
                   Navigator.of(context).push(
                       MaterialPageRoute(builder: (content) => const LoginScreen()));
                 },
-                style: FilledButton.styleFrom(backgroundColor: ThemedColorDark),
-                child: Text("get start".toUpperCase()),
               ),
-            )
+            ),
+
           ],
         ),
       ),

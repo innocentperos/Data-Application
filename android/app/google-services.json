@@ -31,10 +31,46 @@
               "client_type": 3
             },
             {
-              "client_id": "891643108026-ta7ir2j89d3knalh2o2l177fj85aggi4.apps.googleusercontent.com",
+              "client_id": "891643108026-6gktlbs9am11svl6s4jadnnsf4sibtdc.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.untitled1"
+                "bundle_id": "dev.studioepicx.dataApplication"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891643108026:android:fdaf63b502c0760bd38083",
+        "android_client_info": {
+          "package_name": "dev.studioepicx.data_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891643108026-4uuaodkcva3me551gra79l93cse0a2mp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXNAF7xKpb6VO2V1HZIE2A7pRKcULCWBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891643108026-4uuaodkcva3me551gra79l93cse0a2mp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "891643108026-6gktlbs9am11svl6s4jadnnsf4sibtdc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "dev.studioepicx.dataApplication"
               }
             }
           ]

@@ -91,7 +91,7 @@ class CustomOutlinedButton extends StatelessWidget {
                 ),
               )
             : Text(
-                text!.toUpperCase(),
+                text.toUpperCase(),
                 style: WhiteText.copyWith(letterSpacing: 1.5, color: color),
               ),
       ),
